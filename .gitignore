@@ -1,0 +1,17 @@
+## PyCharm
+.idea/
+*.iw
+
+## Visual Studio Code
+.vscode
+
+## Komodo Edit
+*.komodoproject
+
+## macOS
+.DS_Store
+
+## recon-ng
+workspaces/*
+keys.db
+.cid
