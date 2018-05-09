@@ -14,7 +14,7 @@ class Module(BaseModule):
 
     def module_run(self, netblocks):
         for netblock in netblocks:
-            url = 'https://ea8xmom64f.execute-api.us-west-2.amazonaws.com/dev/dnsdb/lookup/rdata/ip/%s' % (netblock.replace("/", ","))
+            url = 'https://ea8xmom64f.execute-api.us-west-2.amazonaws.com/prod/dnsdb/lookup/rdata/ip/%s' % (netblock.replace("/", ","))
             headers = {'Accept': 'application/json'}
             resp = self.request(url, headers=headers)
             if "no results found for query" in resp.text:

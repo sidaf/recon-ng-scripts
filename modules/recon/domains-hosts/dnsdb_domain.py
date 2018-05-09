@@ -19,7 +19,7 @@ class Module(BaseModule):
         for domain in domains:
             self.heading(domain, level=0)
 
-            url = 'https://ea8xmom64f.execute-api.us-west-2.amazonaws.com/dev/dnsdb/lookup/rrset/name/*.%s' % (domain)
+            url = 'https://ea8xmom64f.execute-api.us-west-2.amazonaws.com/prod/dnsdb/lookup/rrset/name/*.%s' % (domain)
             headers = {'Accept': 'application/json'}
             max_attempts = 3
             attempt = 0
