@@ -13,7 +13,7 @@ class Module(BaseModule, ResolverMixin):
         ),
         'query': 'SELECT DISTINCT host FROM hosts WHERE host IS NOT NULL AND ip_address IS NULL',
         'options': (
-            ('filter', False, True, 'if true results are only added if the address returned already exists within the hosts table'),
+            ('filter', True, True, 'if true results are only added if the address returned already exists within the hosts table'),
         ),
     }
 
@@ -23,11 +23,13 @@ class Module(BaseModule, ResolverMixin):
             try:
                 answers = q.query(host)
             except dns.resolver.NXDOMAIN:
-                self.verbose('%s => Unknown' % (host))
+                self.verbose('%s => The DNS query name does not exist' % (host))
             except dns.resolver.NoAnswer:
-                self.verbose('%s => No answer' % (host))
-            except (dns.resolver.NoNameservers, dns.resolver.Timeout):
-                self.verbose('%s => DNS Error' % (host))
+                self.verbose('%s => The DNS response does not contain an answer to the question' % (host))
+            except (dns.resolver.NoNameservers):
+                self.verbose('%s => All nameservers failed to answer the query' % (host))
+            except (dns.resolver.Timeout):
+                self.verbose('%s => The DNS operation timed out' % (host))
             else:
                 for i in range(0, len(answers)):
                     if i == 0:

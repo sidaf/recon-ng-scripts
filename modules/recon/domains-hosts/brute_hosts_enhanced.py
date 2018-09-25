@@ -13,7 +13,7 @@ class Module(BaseModule, ResolverMixin, ThreadingMixin):
         'query': 'SELECT DISTINCT domain FROM domains WHERE domain IS NOT NULL',
         'options': (
             ('wordlist', os.path.join(BaseModule._home, 'data/', 'hostnames.txt'), True, 'path to hostname wordlist'),
-            ('filter', False, True, 'if true a result is only added if the address returned already exists within the hosts table'),
+            ('filter', True, True, 'if true a result is only added if the address returned already exists within the hosts table'),
         ),
     }
 

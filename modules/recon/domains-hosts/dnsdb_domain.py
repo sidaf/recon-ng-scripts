@@ -21,19 +21,13 @@ class Module(BaseModule):
 
             url = 'https://ea8xmom64f.execute-api.us-west-2.amazonaws.com/prod/dnsdb/lookup/rrset/name/*.%s' % (domain)
             headers = {'Accept': 'application/json'}
-            max_attempts = 3
-            attempt = 0
-            while attempt < max_attempts:
-                try:
-                    resp = self.request(url, headers=headers)
-                except SSLError:
-                    attempt += 1
-                    if attempt >= max_attempts:
-                        self.error('Request timed out.')
-                    continue
+            resp = self.request(url, headers=headers)
+            if "not authorized to access" in resp.text:
+                jsonobj = json.loads(resp.text)
+                self.output(jsonobj['Message'])
                 break
             if "no results found for query" in resp.text:
-                self.output('No results found.')
+                #self.output('No results found.')
                 continue
             data = StringIO.StringIO(resp.text)
             for line in data:
